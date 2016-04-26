@@ -422,7 +422,8 @@ while 1
             
             %disp('Plotting...')
             hfig=figure(1);
-            %set(hfig,'units','normalized','outerposition',[0.1 0.1 0.9 0.9],'Name','LMAS, UC Berkeley : MTConnect in action') %New fullscreen figure
+            %set(hfig, 'Units', 'normalized', 'Position', [0.1 0.1,1,1]);
+            set(hfig,'units','normalized','outerposition',[0.1 0.1 0.9 0.9],'Name','LMAS, UC Berkeley : MTConnect in action') %New fullscreen figure
             
             subplot(2,2,1) %First subplot : Cutting simulation - block-by-block progress
 %                     if max(max(currentZ))~=min(min(currentZ)) %Ensure it is not a flat surface
@@ -456,7 +457,8 @@ while 1
             end
             plot(NaN)
             if exist('cubebit','var')
-                x=-length/2:0.1:length/2; y=-breadth/2:0.1:breadth/2; z=height-maxdepth:0.1:height; plotSimulation(x,y,z,cubebit,Colors); %%To be optimized
+                x=-length/2:0.1:length/2; y=-breadth/2:0.1:breadth/2; z=height-maxdepth:0.1:height; 
+                %plotSimulation(x,y,z,cubebit,Colors); %%To be optimized
             end
             vert = [-length/2 -breadth/2 0;length/2 -breadth/2 0;length/2 breadth/2 0;-length/2 breadth/2 0;-length/2 -breadth/2 (height-maxdepth);length/2 -breadth/2 (height-maxdepth);length/2 breadth/2 (height-maxdepth);-length/2 breadth/2 (height-maxdepth)];
             fac = [1 2 6 5;2 3 7 6;3 4 8 7;4 1 5 8;1 2 3 4;5 6 7 8];
@@ -506,7 +508,7 @@ while 1
             set(hl,'FontSize',6);
             set(gca,'FontSize',6)
             
-            subplot (2,2,4)
+            subplot(2,2,4)
             showEnergyDensity(EP1,EData(counter-1,:))
             drawnow();
             clc

@@ -48,7 +48,7 @@ function [] = showEnergyDensity(obj, newTestFile)
     ylim([0,700])
     text(150,400,'Spindle speed = 3000 (RPM)','Interpreter','Latex','FontSize',8)
     %box on
-    set(gcf,'position',[100,100,500,300])
+    %set(gcf,'position',[100,100,500,300])
 end
 
 function [ X, Y ] = extractData(fileName)

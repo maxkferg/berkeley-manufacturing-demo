@@ -1,11 +1,10 @@
 function [] = showEnergyDensity(obj, newTestFile)
-
-    plot_variance = @(x,lower,upper,color) set(fill([x,x(end:-1:1)],[upper,fliplr(lower)],color),'EdgeColor','none');
-    meanfunc = {@meanSum, {@meanLinear, @meanConst}}; %hyp.mean = zeros(size(X,2)+1,1);
+% Show the energy density plot
+  
     likfunc = @likGauss; %sn = 500; hyp.lik = log(sn);
     covfunc = @covSEard; 
 
-    %plotting density for only cutting operations
+    % Plotting density for only cutting operations
     hyp2 = obj.F{1,1};
     index_job=obj.F{2,1};
     feature_index = [1 2 3   4 5 6 7   8 9 10 ];
@@ -26,30 +25,55 @@ function [] = showEnergyDensity(obj, newTestFile)
     feed_range = 0:1:1000;
         %feed            spindle                          depth_cut                     cut_direction                   cut_method
     XX_11 = [feed_range',3000*ones(length(feed_range),1), 1*ones(length(feed_range),1),repmat([0 1 0 0],length(feed_range),1), repmat([1 0 0],length(feed_range),1)];
+    [m,s] = gp(hyp2, @infExact, [], covfunc, likfunc, X_training, Y_training, XX_11);
     
-    [m,s]=gp(hyp2, @infExact, [], covfunc, likfunc, X_training, Y_training, XX_11);
+    hold on;
     
-    %figure(1)
+    % Only setup the figure once
+    title = get(get(gca, 'Title'), 'String');
+    if isempty(title)
+        setupEnergyDensity(m,s,feed_range)
+    end
+    
+    if isempty(feed(index_11))==0
+        % Plot points on plot(2,2,4)
+        hp1=plot(feed(index_11),density(index_11),'ob');
+        set(hp1,'Linewidth',1.5);
+    end
+end
+
+
+
+function setupEnergyDensity(m,s,feed_range)
+% Initial setup of the energy density figure
+% Should only be called once for performance and alpha(*) reasons
+    
     hold on
     plot(NaN)
     hp2=plot(feed_range,m,'--k');
     set(hp2,'Linewidth',1.5);
-    if isempty(feed(index_11))==0
-    hp1=plot(feed(index_11),density(index_11),'ob');
-    set(hp1,'Linewidth',1.5);
-    end
+   
     plot_variance(feed_range,(m-1.96*sqrt(s))',(m+1.96*sqrt(s))','r')
     alpha(0.2)
-    h_legend=legend('Measured','Predicted Mean');
+    h_legend = legend('Measured','Predicted Mean');
     set(h_legend,'FontSize',10);
+    title('Energy Consumption Model')
     xlabel('Feed rate $x_1$ (mm/min)','Interpreter','Latex','FontSize',8)
     ylabel('Energy density (J/mm)','Interpreter','Latex','FontSize',8)
     xlim([0,500])
     ylim([0,700])
     text(150,400,'Spindle speed = 3000 (RPM)','Interpreter','Latex','FontSize',8)
-    %box on
-    %set(gcf,'position',[100,100,500,300])
+    set(gca,'fontSize',16);
 end
+
+
+function plot_variance(x,lower,upper,color)
+    % Plot the red variance area on the plot
+    set(fill([x,x(end:-1:1)],[upper,fliplr(lower)],color),'EdgeColor','none');
+end
+
+
+
 
 function [ X, Y ] = extractData(fileName)
     
@@ -182,11 +206,7 @@ function [ X, Y ] = extractData(fileName)
     L = L(clean_up_index);
     E = E(clean_up_index);
     Y = Y(clean_up_index);
-
 end
-
-
-
 
 
 

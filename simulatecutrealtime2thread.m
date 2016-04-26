@@ -5,10 +5,11 @@ clc
 
 counter=1;
 modal=num2cell(0);
+addpath(genpath('gpml-matlab-v3.2-2013-01-15'));
 
 %% Initialize GP Machine Learning Module & Training
 
-startup();
+%startup();
 clear OCT
 disp('Training...')
 EP1= epm2([], 'Training1.mat', 1);
@@ -415,7 +416,7 @@ while 1
             %save([filename '_realtime'],'EData') %Overwrite .mat file for Machine Learning
             
             counter=counter+1;
-            delete(['test/Block_' charc '.txt']); %Change between .xlsx and .txt
+            %delete(['test/Block_' charc '.txt']); %Change between .xlsx and .txt
             
             %% Plot functions
             
@@ -507,7 +508,7 @@ while 1
             
             subplot (2,2,4)
             showEnergyDensity(EP1,EData(counter-1,:))
-            
+            drawnow();
             clc
             
             trained=0;

@@ -457,7 +457,7 @@ while 1
             plot(NaN)
             if exist('cubebit','var')
                 x=-length/2:0.1:length/2; y=-breadth/2:0.1:breadth/2; z=height-maxdepth:0.1:height; 
-                %plotSimulation(x,y,z,cubebit,Colors); %%To be optimized
+                plotSimulation(x,y,z,cubebit,Colors); %%To be optimized
             end
             vert = [-length/2 -breadth/2 0;length/2 -breadth/2 0;length/2 breadth/2 0;-length/2 breadth/2 0;-length/2 -breadth/2 (height-maxdepth);length/2 -breadth/2 (height-maxdepth);length/2 breadth/2 (height-maxdepth);-length/2 breadth/2 (height-maxdepth)];
             fac = [1 2 6 5;2 3 7 6;3 4 8 7;4 1 5 8;1 2 3 4;5 6 7 8];

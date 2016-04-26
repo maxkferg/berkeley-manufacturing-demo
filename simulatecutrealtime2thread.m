@@ -422,7 +422,6 @@ while 1
             
             %disp('Plotting...')
             hfig=figure(1);
-            %set(hfig, 'Units', 'normalized', 'Position', [0.1 0.1,1,1]);
             set(hfig,'units','normalized','outerposition',[0.1 0.1 0.9 0.9],'Name','LMAS, UC Berkeley : MTConnect in action') %New fullscreen figure
             
             subplot(2,2,1) %First subplot : Cutting simulation - block-by-block progress
@@ -466,33 +465,10 @@ while 1
             view(3)
             axis equal vis3d
             title(['NC Block:  ' blk ', Depth :  ' num2str(Depth) ' mm , Feed :  ' num2str(feedrate) ' mm/min , Speed:  ' num2str(spindlespeed) ' RPM'])
-
-            subplot (2,2,2) %Second subplot : X,Y,Z,S Load bars
-            hold off
-            plot(NaN)
-            H = [XL; YL; ZL; SL];
-            Xticks = {'X Load'; 'Y Load'; 'Z Load'; 'S Load'};
-            Nmax = numel(H);
-            for i=1:Nmax
-                h = bar(i, H(i));
-                if i == 1, hold on, end
-                if H(i) < 10
-                    col = 'g';
-                elseif H(i) < 35
-                    col = 'y';
-                else
-                    col = 'r';
-                end
-                set(h, 'FaceColor', col)
-            end
-            set(gca, 'XTickLabel', '')
-            ylim([0 100])
-            xlabetxt = Xticks;
-            ypos2 = -max(ylim)/50;
-            text(1:Nmax,repmat(ypos2,Nmax,1),xlabetxt','horizontalalignment','center','verticalalignment','top','Rotation',0,'FontSize',6)
-            title('Load as a % of the maximum rating')
-            ylabel('% of maximum load capacity')
-            set(gca,'FontSize',6)
+            
+            % Second subplot: Load as a percent of max rating
+            subplot(2,2,2)
+            showLoadPlot(XL,YL,ZL,SL);
             
             subplot (2,2,3) %Third subplot : Energy graph
             energydata=EData(:,9);
@@ -507,7 +483,7 @@ while 1
             hl=legend('Measured','Predicted');
             set(hl,'FontSize',6);
             set(gca,'FontSize',6)
-            
+
             subplot(2,2,4)
             showEnergyDensity(EP1,EData(counter-1,:))
             drawnow();

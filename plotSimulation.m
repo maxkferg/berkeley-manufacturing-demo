@@ -27,6 +27,7 @@ function plotSimulation(x,y,z,V,C)
     py = [py, repmat(y(iy), 4, 1)];
     pz = [pz, [z(iz); z(iz+1); z(iz+1); z(iz)]];
     c = [c, C(ilin) + dc];
+    
     %-Z
     ilin = find(cat(3, V(:,:,1), ~V(:,:,1:end-1) & V(:,:,2:end)))';
     [ix,iy,iz] = ind2sub([nx,ny,nz], ilin);
@@ -34,6 +35,7 @@ function plotSimulation(x,y,z,V,C)
     py = [py, [y(iy); y(iy+1); y(iy+1); y(iy)]];
     pz = [pz, repmat(z(iz), 4, 1)];
     c = [c, C(ilin) - dc];
+    
     %+X
     ilin = find(cat(1, V(1:end-1,:,:) & ~V(2:end,:,:), V(end,:,:)))';
     [ix,iy,iz] = ind2sub([nx,ny,nz], ilin);
@@ -58,10 +60,12 @@ function plotSimulation(x,y,z,V,C)
     c = [c, C(ilin) - dc];
 
     %figure;
-    patch(px,py,pz,c)
+    patch(px,py,pz,c);
     axis equal vis3d
     view(3);
-    set(gca,'FontSize',6)
+    set(gca,'FontSize',8)
     shading flat; %dc can be set to zero when using faceted
-    clear px py pz c ilin ix iy iz nx ny nz
+    clear px py pz c ilin ix iy iz nx ny nz;
+    %drawnow();
+    %disp('Done');
 end

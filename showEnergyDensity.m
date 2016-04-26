@@ -20,7 +20,7 @@ function [] = showEnergyDensity(obj, newTestFile)
     cut_method = XXX(:,8:10);
     density = YYY;
     %cut == 1          input(:,4)        input(:,5)         input(:,3)    input(:,2)     input(:,2)    input(:,12)
-    index_11 = find(cut_direction(:,2)==1 & cut_method(:,1)==1 & depth_cut == 1 & spindle >2800 & spindle <3200 );
+    index_11 = find(cut_direction(:,1)==1 & (cut_method(:,1)==1 | cut_method(:,2)==1) & depth_cut == 1 & spindle >2800 & spindle <3200 );
 
     feed_range = 0:1:1000;
         %feed            spindle                          depth_cut                     cut_direction                   cut_method

@@ -456,7 +456,8 @@ while 1
             end
             plot(NaN)
             if exist('cubebit','var')
-                x=-length/2:0.1:length/2; y=-breadth/2:0.1:breadth/2; z=height-maxdepth:0.1:height; 
+                x=-length/2:0.1:length/2;
+                y=-breadth/2:0.1:breadth/2; z=height-maxdepth:0.1:height; 
                 plotSimulation(x,y,z,cubebit,Colors); %%To be optimized
             end
             vert = [-length/2 -breadth/2 0;length/2 -breadth/2 0;length/2 breadth/2 0;-length/2 breadth/2 0;-length/2 -breadth/2 (height-maxdepth);length/2 -breadth/2 (height-maxdepth);length/2 breadth/2 (height-maxdepth);-length/2 breadth/2 (height-maxdepth)];

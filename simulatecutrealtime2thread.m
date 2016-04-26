@@ -470,20 +470,25 @@ while 1
             subplot(2,2,2)
             showLoadPlot(XL,YL,ZL,SL);
             
-            subplot (2,2,3) %Third subplot : Energy graph
+            % Third subplot : Energy graph
+            subplot (2,2,3) 
             energydata=EData(:,9);
             [predictionmean(counter-1) predictionstd(counter-1)]=predictenergy2(EP1,EData(counter-1,:));
             Accuracy = 1 - abs(sum(predictionmean)-sum(cell2mat(energydata)))/sum(cell2mat(energydata));
             hold on
             plot(cell2mat(energydata),'b-')
             plot(predictionmean,'r-')
-            title('Energy consumption graph')
-            xlabel('Blocks')
-            ylabel('Energy consumption [J]')
-            hl=legend('Measured','Predicted');
-            set(hl,'FontSize',6);
-            set(gca,'FontSize',6)
+            % Only set the axis labels onces
+            if isempty(get(get(gca, 'Title'), 'String'))   
+                title('Energy consumption graph')
+                xlabel('Blocks')
+                ylabel('Energy consumption [J]')
+                hl=legend('Measured','Predicted');
+                set(hl,'FontSize',12);
+                set(gca,'FontSize',16)
+            end
 
+            % Fourth subplot : Energy density graph
             subplot(2,2,4)
             showEnergyDensity(EP1,EData(counter-1,:))
             drawnow();

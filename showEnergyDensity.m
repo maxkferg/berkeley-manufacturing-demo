@@ -62,7 +62,7 @@ function setupEnergyDensity(m,s,feed_range)
     ylabel('Energy density (J/mm)','Interpreter','Latex','FontSize',8)
     xlim([0,500])
     ylim([0,700])
-    text(150,400,'Spindle speed = 3000 (RPM)','Interpreter','Latex','FontSize',8)
+    text(150,400,'Spindle speed = 3000 (RPM)','Interpreter','Latex','FontSize',12)
     set(gca,'fontSize',16);
 end
 
